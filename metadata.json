@@ -1,0 +1,5 @@
+{
+  "name": "Forex Confluence & Prediction Dashboard",
+  "description": "A high-performance trading assistant dashboard that aggregates currency strength, market sentiment, session volatility, and DXY correlation to generate high-probability trade scores using Gemini AI analysis.",
+  "requestFramePermissions": []
+}
