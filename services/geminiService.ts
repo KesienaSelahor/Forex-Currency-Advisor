@@ -1,6 +1,6 @@
 
 import { GoogleGenAI, Type } from "@google/genai";
-import { MarketState, TradeSignal } from "../types";
+import { MarketState, TradeSignal } from "../types.ts";
 
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY! });
 
@@ -11,32 +11,29 @@ export const analyzeTradeSignal = async (
   volatilityScore: number
 ): Promise<TradeSignal> => {
   const systemPrompt = `
-    You are a Senior Quant Developer explaining trades. 
-    Analyze Forex data including Smart Money Concepts (SMC):
-    - Identify SMT Divergence (DXY vs Majors).
-    - Check ADR (Average Daily Range) Exhaustion (if >90%, downgrade signal to WAIT).
-    - Analyze News Catalyst Scores.
-    - Reference Liquidity Zones (Order Blocks/FVG).
+    You are a Senior Quant Developer explaining trades to a BEGINNER. 
+    Analyze Forex data using advanced institutional concepts but EXPLAIN them simply:
+    - SMT Divergence: Check if the Dollar and the Pair are moving in ways that confirm a trend or signal a reversal.
+    - Daily Movement (ADR): If the market has already moved >90% of its normal daily distance, tell the user to WAIT.
+    - News Catalysts: How news headlines are actually moving the needle.
+    - Institutional Zones: Where big banks are likely entering.
 
-    CRITICAL REASONING LABELS:
-    - "Anchor Check": SMT Divergence/DXY Correlation.
-    - "Crowd Behavior": Sentiment Analysis.
-    - "Market Activity": Institutional Volume/Volatility.
-    - "Range Exhaustion": ADR check.
-    - "Smart Money": Order Blocks/FVG proximity.
-
-    Output must be JSON. Provide specific Entry, TP (Take Profit), and SL (Stop Loss) prices based on current market state.
+    RULES:
+    - Avoid technical abbreviations like "OB", "FVG", "SMT" in the 'reasoning' array. Use "Bank Entry Zone", "Price Gap", "Divergence".
+    - Provide a specific 'tp' (Profit Target) and 'sl' (Safety Stop) price.
+    - 'score' is 0-100.
+    - Output MUST be valid JSON.
   `;
 
   const prompt = `
     Analyze ${pair} with current data:
     - Market State: ${JSON.stringify(state)}
-    - Is Kill Zone: ${isKillZone}
-    - Volatility Score: ${volatilityScore}
-    - DXY Price: ${state.dxy.price} (${state.dxy.trend})
-    - ADR Usage: ${state.adr.percentageUsed}%
+    - Daily Movement Usage: ${state.adr.percentageUsed}%
+    - Institutional Presence: ${JSON.stringify(state.liquidityZones)}
+    - Dollar Index Trend: ${state.dxy.trend}
+    - Is it a High-Volatility Period: ${isKillZone}
     
-    Determine if there is a SMT Divergence. Provide a high-probability trade setup.
+    Provide a high-probability trade setup with clear Profit and Safety prices.
   `;
 
   try {
@@ -74,7 +71,7 @@ export const analyzeTradeSignal = async (
       pair,
       score: 50,
       action: 'WAIT',
-      reasoning: ['Data stream interrupted. Awaiting professional session confirmation.'],
+      reasoning: ['Awaiting data sync. Keep an eye on the Daily Movement bar.'],
       quality: 'Unsafe',
       tp: 0,
       sl: 0,

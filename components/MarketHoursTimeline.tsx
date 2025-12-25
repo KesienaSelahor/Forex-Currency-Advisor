@@ -1,6 +1,5 @@
-
 import React, { useState, useEffect, useMemo } from 'react';
-import { SESSIONS, TIMEZONES } from '../constants';
+import { SESSIONS, TIMEZONES } from '../constants.ts';
 
 const MarketHoursTimeline: React.FC = () => {
   // Detect user's local timezone on mount

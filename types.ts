@@ -21,10 +21,10 @@ export interface NewsEvent {
 }
 
 export interface LiquidityZone {
-  type: 'OB' | 'FVG';
+  type: string; // "Institutional Order Zone" or "Market Price Gap"
   price: number;
   strength: number; // 1-5
-  bias: 'Supply' | 'Demand';
+  bias: 'Buying Zone' | 'Selling Zone';
 }
 
 export interface ADRInfo {

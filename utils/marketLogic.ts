@@ -1,5 +1,4 @@
-
-import { KILL_ZONE, SESSIONS } from '../constants';
+import { KILL_ZONE, SESSIONS } from '../constants.ts';
 
 /**
  * Returns the current time in Africa/Lagos timezone

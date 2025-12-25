@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { CurrencyStrength } from '../types';
+import { CurrencyStrength } from '../types.ts';
 
 interface Props {
   data: CurrencyStrength[];

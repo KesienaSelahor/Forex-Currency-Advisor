@@ -1,6 +1,5 @@
-
 import React, { useState, useEffect } from 'react';
-import { getLagosTime, formatLagosTime, getActiveSessions, isOverlapActive } from '../utils/marketLogic';
+import { getLagosTime, formatLagosTime, getActiveSessions, isOverlapActive } from '../utils/marketLogic.ts';
 
 interface Props {
   selectedSession: string;
