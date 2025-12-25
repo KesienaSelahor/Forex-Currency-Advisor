@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { MarketState, TradeSignal } from './types.ts';
 import { MAJOR_PAIRS, SESSIONS } from './constants.ts';
